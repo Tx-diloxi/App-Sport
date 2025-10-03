@@ -234,8 +234,8 @@ function displayBadmintonExercise(exercise, container) {
             <div class="exercise-name">${exercise.name}</div>
             <div class="badminton-question">Avez-vous joué au badminton aujourd'hui?</div>
             <div class="swipe-buttons">
-                <button class="swipe-btn btn-skip" onclick="skipBadminton()">✕ Non</button>
-                <button class="swipe-btn btn-done" onclick="completeBadminton()">✓ Oui</button>
+                <button class="swipe-btn btn-skip" onclick="skipBadminton()">✕</button>
+                <button class="swipe-btn btn-done" onclick="completeBadminton()">✓</button>
             </div>
         </div>
     `;
