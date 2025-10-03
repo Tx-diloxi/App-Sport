@@ -9,15 +9,18 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>💪 Athlética</h1>
-            <p>Prise de Masse 2026</p>
+            <div class="logo-container">
+                <div class="logo">FT</div>
+                <div class="logo-text">Athlética</div>
+            </div>
+            <p>Prise de Masse 2026 • Programme Professionnel</p>
         </div>
 
         <div class="nav">
-            <button class="nav-btn active" onclick="showSection('sport')">Sport</button>
-            <button class="nav-btn" onclick="showSection('nutrition')">Nutrition</button>
-            <button class="nav-btn" onclick="showSection('stats')">Stats</button>
-            <button class="nav-btn" onclick="showSection('history')">Historique</button>
+            <button class="nav-btn active" onclick="showSection('sport')">🏋️ Sport</button>
+            <button class="nav-btn" onclick="showSection('nutrition')">🍎 Nutrition</button>
+            <button class="nav-btn" onclick="showSection('stats')">📊 Stats</button>
+            <button class="nav-btn" onclick="showSection('history')">📅 Historique</button>
         </div>
 
         <!-- Section Sport -->
@@ -38,7 +41,7 @@
                 <div class="water-counter">
                     <p>Verres d'eau aujourd'hui</p>
                     <div class="water-count" id="waterCount">0</div>
-                    <p style="color: #666;">Objectif: 8-10 verres/jour</p>
+                    <p style="color: var(--text-secondary);">Objectif: 8-10 verres/jour</p>
                     <div class="water-buttons">
                         <button class="water-btn btn-remove" onclick="changeWater(-1)">-</button>
                         <button class="water-btn btn-add" onclick="changeWater(1)">+</button>
@@ -147,10 +150,9 @@
             </div>
 
             <button class="btn-primary" onclick="exportData()">📥 Exporter les données</button>
-            <button class="btn-primary" onclick="clearData()" style="background: #ff6b6b;">🗑️ Réinitialiser</button>
+            <button class="btn-primary" onclick="clearData()" style="background: var(--accent);">🗑️ Réinitialiser</button>
         </div>
     </div>
-
     <script src="./files/script.js"></script>
 </body>
 </html>

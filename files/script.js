@@ -1,4 +1,4 @@
-
+// Le code JavaScript reste exactement le même que précédemment
 // Programme d'entraînement complet
 const workoutProgram = {
     'Lundi': {
@@ -12,7 +12,7 @@ const workoutProgram = {
         name: 'Badminton',
         type: 'badminton',
         exercises: [
-            { name: 'Badminton', icon: '🏸', duration: '1h30' }
+            { name: 'Badminton', icon: '🏸', duration: '1-2h' }
         ]
     },
     'Mercredi': {
@@ -32,7 +32,7 @@ const workoutProgram = {
         type: 'muscu',
         warmup: 'échauffement rameur ou vélo',
         exercises: [
-            { name: 'Développé couché', icon: '🏋️', sets: 3, reps: '8-12', rest: '1 min' },
+            { name: 'Développé couché', icon: '🏋️', sets: 3, reps: '8-12', rest: '1-2 min' },
             { name: 'Développé militaire', icon: '💪', sets: 3, reps: '8-12', rest: '1 min' },
             { name: 'Élévations latérales', icon: '🦅', sets: 3, reps: '10-12', rest: '75 sec' },
             { name: 'Dips', icon: '🤸', sets: 3, reps: '10', rest: '1 min' },
@@ -44,7 +44,7 @@ const workoutProgram = {
         type: 'muscu',
         warmup: 'échauffement rameur',
         exercises: [
-            { name: 'Tractions/Tirage vertical', icon: '🎯', sets: 3, reps: '8-12', rest: '1 min' },
+            { name: 'Tractions/Tirage vertical', icon: '🎯', sets: 3, reps: '8-12', rest: '1-2 min' },
             { name: 'Rowing', icon: '🚣', sets: 3, reps: '8-12', rest: '1-2 min' },
             { name: 'Tirage assis', icon: '⚡', sets: 3, reps: '10', rest: '1 min' },
             { name: 'Curl barre', icon: '💪', sets: 3, reps: '10-12', rest: '1 min' },
@@ -56,7 +56,7 @@ const workoutProgram = {
         type: 'muscu',
         warmup: 'échauffement vélo',
         exercises: [
-            { name: 'Squat/Presse', icon: '🦵', sets: 3, reps: '8-12', rest: '1 min' },
+            { name: 'Squat/Presse', icon: '🦵', sets: 3, reps: '8-12', rest: '1-2 min' },
             { name: 'Fentes', icon: '🏃', sets: 3, reps: '10', rest: '75-90 sec' },
             { name: 'Leg curl', icon: '🦿', sets: 3, reps: '10', rest: '1 min' },
             { name: 'Mollets debout', icon: '👟', sets: 4, reps: '12-15', rest: '1 min' },
@@ -234,8 +234,8 @@ function displayBadmintonExercise(exercise, container) {
             <div class="exercise-name">${exercise.name}</div>
             <div class="badminton-question">Avez-vous joué au badminton aujourd'hui?</div>
             <div class="swipe-buttons">
-                <button class="swipe-btn btn-skip" onclick="skipBadminton()">✕</button>
-                <button class="swipe-btn btn-done" onclick="completeBadminton()">✓</button>
+                <button class="swipe-btn btn-skip" onclick="skipBadminton()">✕ Non</button>
+                <button class="swipe-btn btn-done" onclick="completeBadminton()">✓ Oui</button>
             </div>
         </div>
     `;
