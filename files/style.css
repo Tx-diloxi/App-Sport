@@ -1,0 +1,353 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding-bottom: 80px;
+}
+
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    color: white;
+    padding: 20px 0;
+}
+
+.header h1 {
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+.header p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Navigation */
+.nav {
+    display: flex;
+    background: white;
+    border-radius: 15px;
+    margin: 20px 0;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.nav-btn {
+    flex: 1;
+    padding: 15px;
+    border: none;
+    background: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.nav-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* Sections */
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+/* Cards */
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.card h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+/* Swipe Cards pour Sport */
+.swipe-container {
+    position: relative;
+    height: 500px;
+    margin-bottom: 20px;
+}
+
+.exercise-card {
+    position: absolute;
+    width: 100%;
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: transform 0.3s, opacity 0.3s;
+    touch-action: pan-y;
+}
+
+.exercise-card.swiping {
+    transition: none;
+}
+
+.exercise-card.swiped-left {
+    transform: translateX(-150%) rotate(-20deg);
+    opacity: 0;
+}
+
+.exercise-card.swiped-right {
+    transform: translateX(150%) rotate(20deg);
+    opacity: 0;
+}
+
+.exercise-image {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+.exercise-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.exercise-details {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.series-input {
+    margin: 15px 0;
+}
+
+.series-input label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+}
+
+.series-input input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.swipe-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.swipe-btn {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+}
+
+.swipe-btn:active {
+    transform: scale(0.95);
+}
+
+.btn-skip {
+    background: #ff6b6b;
+    color: white;
+}
+
+.btn-done {
+    background: #51cf66;
+    color: white;
+}
+
+/* Hydratation */
+.water-counter {
+    text-align: center;
+    padding: 30px;
+}
+
+.water-count {
+    font-size: 72px;
+    font-weight: bold;
+    color: #667eea;
+    margin: 20px 0;
+}
+
+.water-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.water-btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+.water-btn:active {
+    transform: scale(0.95);
+}
+
+.btn-add {
+    background: #51cf66;
+    color: white;
+}
+
+.btn-remove {
+    background: #ff6b6b;
+    color: white;
+}
+
+/* Nutrition */
+.meal-item {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.meal-item:last-child {
+    border-bottom: none;
+}
+
+.meal-name {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.meal-details {
+    color: #666;
+    font-size: 14px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    cursor: pointer;
+}
+
+.checkbox-item input {
+    width: 22px;
+    height: 22px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+/* Stats */
+.stat-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 48px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.stat-label {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* Historique */
+.history-item {
+    padding: 15px;
+    border-left: 4px solid #667eea;
+    margin-bottom: 10px;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.history-date {
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 5px;
+}
+
+.history-details {
+    font-size: 14px;
+    color: #666;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.day-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+}
+
+.day-btn {
+    padding: 10px 20px;
+    border: 2px solid #667eea;
+    background: white;
+    color: #667eea;
+    border-radius: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.day-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+.no-data {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+}
