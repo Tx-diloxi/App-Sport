@@ -352,7 +352,7 @@ function displayExercise() {
     const exercises = workout.exercises;
 
     if (currentExerciseIndex >= exercises.length) {
-        container.innerHTML = '<div class="card"><h3>✅ Séance terminée!</h3><p>Bravo! Pensez à vous hydrater et à bien récupérer.</p><button class="btn-primary" onclick="resetWorkout()">Recommencer</button></div>';
+        container.innerHTML = '<div class="card"><h3>✅ Séance terminée!</h3><p>Bravo! Pensez à vous hydrater et à bien récupérer.</div>';//</p><button class="btn-primary" onclick="resetWorkout()">Recommencer</button>
         saveWorkoutComplete();
         return;
     }
