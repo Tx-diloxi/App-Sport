@@ -3,6 +3,7 @@ const workoutProgram = {
     'Lundi': {
         name: 'Cardio',
         type: 'cardio',
+        warmup: 'échauffement dynamique (sauts, montées de genoux, rotations de bras)',
         exercises: [
             { name: 'Course à pied', icon: '🏃', duration: '30-45 min' }
         ]
@@ -10,6 +11,7 @@ const workoutProgram = {
     'Mardi': {
         name: 'Badminton',
         type: 'badminton',
+        warmup: 'échauffement spécifique badminton',
         exercises: [
             { name: 'Badminton', icon: '🏸', duration: '1-2h' }
         ]
@@ -17,6 +19,7 @@ const workoutProgram = {
     'Mercredi': {
         name: 'Cardio',
         type: 'cardio',
+        warmup: 'échauffement dynamique (sauts, montées de genoux, rotations de bras)',
         exercises: [
             { name: 'Course à pied', icon: '🏃', duration: '30-45 min' }
         ]
@@ -64,6 +67,7 @@ const workoutProgram = {
         ]
     }
 };
+
 
 // Variables globales ORIGINALES
 let currentDay = '';
