@@ -1,3 +1,5 @@
+
+
 // Programme d'entraînement complet
 const workoutProgram = {
     'Lundi': {
@@ -65,7 +67,7 @@ const workoutProgram = {
     }
 };
 
-// Variables globales
+// Variables globales ORIGINALES
 let currentDay = '';
 let currentExerciseIndex = 0;
 let currentSeriesIndex = 0;
@@ -74,13 +76,13 @@ let waterCount = 0;
 let restTimer = null;
 let restTimeLeft = 0;
 
-// Variables pour le swipe
+// Variables pour le swipe ORIGINALES
 let startX = 0;
 let currentX = 0;
 let isSwiping = false;
 let swipeEnabled = true;
 
-// Contrôle du swipe
+// Contrôle du swipe ORIGINAL
 function enableSwipe() {
     swipeEnabled = true;
 }
@@ -89,7 +91,7 @@ function disableSwipe() {
     swipeEnabled = false;
 }
 
-// Initialisation
+// Initialisation ORIGINALE
 function init() {
     loadData();
     createDaySelector();
@@ -101,9 +103,12 @@ function init() {
     
     // Sélection automatique du jour actuel
     autoSelectDay();
+    
+    // Initialiser les statistiques
+    initializeStatsDateSelector();
 }
 
-// Sauvegarde et chargement des données
+// Sauvegarde et chargement des données ORIGINAUX
 function saveData() {
     const today = new Date().toISOString().split('T')[0];
     const data = {
@@ -124,18 +129,20 @@ function loadData() {
     }
 }
 
-// Navigation
+// Navigation ORIGINALE
 function showSection(section) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
     document.getElementById(section).classList.add('active');
     event.target.classList.add('active');
 
-    if (section === 'stats') updateStats();
+    if (section === 'stats') {
+        updateStatsCharts();
+    }
     if (section === 'history') updateHistory();
 }
 
-// Sélecteur de jour
+// Sélecteur de jour ORIGINAL
 function createDaySelector() {
     const selector = document.getElementById('daySelector');
     const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
@@ -149,7 +156,7 @@ function createDaySelector() {
     });
 }
 
-// Sélection automatique du jour
+// Sélection automatique du jour ORIGINALE
 function autoSelectDay() {
     const days = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
     const today = new Date().getDay();
@@ -179,7 +186,7 @@ function selectDay(day) {
     displayExercise();
 }
 
-// Fonctions de gestion du swipe
+// Fonctions de gestion du swipe ORIGINALES
 function setupSwipeHandlers() {
     const container = document.getElementById('swipeContainer');
     
@@ -332,7 +339,7 @@ function skipCurrentAction() {
     }, 300);
 }
 
-// Affichage des exercices
+// Affichage des exercices ORIGINAL
 function displayExercise() {
     const container = document.getElementById('swipeContainer');
     
@@ -363,7 +370,7 @@ function displayExercise() {
     }
 }
 
-// Affichage d'un exercice de cardio
+// Affichage d'un exercice de cardio ORIGINAL
 function displayCardioExercise(exercise, container) {
     enableSwipe();
     
@@ -398,7 +405,7 @@ function displayCardioExercise(exercise, container) {
     container.appendChild(card);
 }
 
-// Affichage d'un exercice de badminton
+// Affichage d'un exercice de badminton ORIGINAL
 function displayBadmintonExercise(exercise, container) {
     enableSwipe();
     
@@ -423,7 +430,7 @@ function displayBadmintonExercise(exercise, container) {
     container.appendChild(card);
 }
 
-// Affichage d'un exercice de musculation
+// Affichage d'un exercice de musculation ORIGINAL
 function displayMuscuExercise(exercise, container) {
     const card = document.createElement('div');
     card.className = 'exercise-card';
@@ -484,7 +491,7 @@ function displayMuscuExercise(exercise, container) {
     container.appendChild(card);
 }
 
-// Complétion d'un exercice de cardio
+// Complétion d'un exercice de cardio ORIGINAL
 function completeCardio() {
     const duration = document.getElementById('duration').value;
     const distance = document.getElementById('distance').value;
@@ -505,7 +512,7 @@ function completeCardio() {
     displayExercise();
 }
 
-// Complétion d'un exercice de badminton
+// Complétion d'un exercice de badminton ORIGINAL
 function completeBadminton() {
     const exercise = workoutProgram[currentDay].exercises[currentExerciseIndex];
     
@@ -537,7 +544,7 @@ function skipBadminton() {
     displayExercise();
 }
 
-// Complétion d'une série de musculation
+// Complétion d'une série de musculation ORIGINAL
 function completeSeries() {
     const weight = document.getElementById('weight').value;
     const reps = document.getElementById('reps').value;
@@ -608,7 +615,7 @@ function skipSeries() {
     }
 }
 
-// Gestion du chrono de repos
+// Gestion du chrono de repos ORIGINAL
 function startRestPeriod(restTime) {
     if (restTime.includes('min')) {
         restTimeLeft = parseInt(restTime) * 60;
@@ -662,7 +669,7 @@ function resetWorkout() {
     displayExercise();
 }
 
-// Hydratation
+// Hydratation ORIGINAL
 function changeWater(amount) {
     waterCount = Math.max(0, waterCount + amount);
     updateWaterDisplay();
@@ -673,7 +680,7 @@ function updateWaterDisplay() {
     document.getElementById('waterCount').textContent = waterCount;
 }
 
-// Nutrition
+// Nutrition ORIGINAL
 function saveMeals() {
     const meals = {};
     for (let i = 1; i <= 6; i++) {
@@ -692,18 +699,12 @@ function loadMeals() {
     }
 }
 
-// Statistiques
+// Statistiques ORIGINAL (remplacé par les nouvelles fonctions)
 function updateStats() {
-    const today = new Date().toISOString().split('T')[0];
-    const workouts = Object.values(workoutData).filter(w => w.completed || w.exercises?.length > 0).length;
-    const exercises = Object.values(workoutData).reduce((total, w) => total + (w.exercises?.length || 0), 0);
-    
-    document.getElementById('totalWorkouts').textContent = workouts;
-    document.getElementById('totalExercises').textContent = exercises;
-    document.getElementById('avgWater').textContent = waterCount;
+    // Cette fonction est maintenant remplacée par updateStatsCharts
 }
 
-// Historique
+// Historique ORIGINAL
 function updateHistory() {
     const historyList = document.getElementById('historyList');
     historyList.innerHTML = '';
@@ -747,7 +748,7 @@ function saveWorkoutComplete() {
     }
 }
 
-// Export et réinitialisation
+// Export et réinitialisation ORIGINAUX
 function exportData() {
     const data = {
         workouts: workoutData,
@@ -774,5 +775,215 @@ function clearData() {
     }
 }
 
-// Initialisation au chargement
+// NOUVELLES FONCTIONS POUR LES STATISTIQUES AVANCÉES
+function initializeStatsDateSelector() {
+    const container = document.getElementById('statsDateSelector');
+    const today = new Date().toISOString().split('T')[0];
+    const dates = getLast7Days();
+    
+    container.innerHTML = '';
+    
+    dates.forEach(date => {
+        const btn = document.createElement('button');
+        btn.className = 'date-btn';
+        btn.textContent = formatDateForDisplay(date);
+        btn.dataset.date = date;
+        
+        if (date === today) {
+            btn.classList.add('active');
+        }
+        
+        btn.onclick = () => {
+            document.querySelectorAll('.date-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            updateStatsCharts(date);
+        };
+        
+        container.appendChild(btn);
+    });
+}
+
+function getLast7Days() {
+    const dates = [];
+    for (let i = 6; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        dates.push(date.toISOString().split('T')[0]);
+    }
+    return dates;
+}
+
+function formatDateForDisplay(dateString) {
+    const date = new Date(dateString);
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    
+    if (date.toDateString() === today.toDateString()) {
+        return 'Aujourd\'hui';
+    } else if (date.toDateString() === yesterday.toDateString()) {
+        return 'Hier';
+    } else {
+        const days = ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'];
+        const dayName = days[date.getDay()];
+        return `${dayName} ${date.getDate()}/${date.getMonth() + 1}`;
+    }
+}
+
+function getDayNameFromDate(dateString) {
+    const date = new Date(dateString);
+    const days = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+    return days[date.getDay()];
+}
+
+function updateStatsCharts(selectedDate = null) {
+    const today = new Date().toISOString().split('T')[0];
+    const dateToShow = selectedDate || today;
+    
+    updateWaterChart(dateToShow);
+    updateExerciseChart(dateToShow);
+    updateStatsSummary(dateToShow);
+}
+
+function updateWaterChart(date) {
+    const container = document.getElementById('waterChart');
+    const dates = getLast7Days();
+    
+    container.innerHTML = '';
+    
+    // Trouver la valeur maximale pour l'échelle
+    let maxWater = 10;
+    dates.forEach(d => {
+        const water = getWaterForDate(d);
+        if (water > maxWater) maxWater = water;
+    });
+    
+    dates.forEach(d => {
+        const water = getWaterForDate(d);
+        const percentage = (water / maxWater) * 100;
+        const isSelected = d === date;
+        
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        bar.style.height = `${Math.max(percentage, 5)}%`;
+        bar.style.background = isSelected ? 'var(--gradient)' : 'var(--secondary)';
+        bar.style.opacity = isSelected ? '1' : '0.7';
+        
+        bar.innerHTML = `
+            <div class="bar-value">${water}</div>
+            <div class="bar-label">${formatDateForDisplay(d)}</div>
+        `;
+        
+        container.appendChild(bar);
+    });
+}
+
+function updateExerciseChart(date) {
+    const container = document.getElementById('exerciseChart');
+    const dates = getLast7Days();
+    
+    container.innerHTML = '';
+    
+    // Trouver la valeur maximale pour l'échelle
+    let maxExercises = 1;
+    dates.forEach(d => {
+        const exercises = getExercisesForDate(d);
+        if (exercises > maxExercises) maxExercises = exercises;
+    });
+    
+    dates.forEach(d => {
+        const exercises = getExercisesForDate(d);
+        const percentage = maxExercises > 0 ? (exercises / maxExercises) * 100 : 0;
+        const isSelected = d === date;
+        
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        bar.style.height = `${Math.max(percentage, 5)}%`;
+        bar.style.background = isSelected ? 'var(--gradient)' : 'var(--success)';
+        bar.style.opacity = isSelected ? '1' : '0.7';
+        
+        bar.innerHTML = `
+            <div class="bar-value">${exercises}</div>
+            <div class="bar-label">${formatDateForDisplay(d)}</div>
+        `;
+        
+        container.appendChild(bar);
+    });
+}
+
+function updateStatsSummary(date) {
+    const container = document.getElementById('statsSummary');
+    const exerciseContainer = document.getElementById('exerciseStats');
+    
+    // Calculer les statistiques
+    const waterCount = getWaterForDate(date);
+    const exerciseCount = getExercisesForDate(date);
+    const dayName = getDayNameFromDate(date);
+    const workout = workoutProgram[dayName];
+    const expectedExercises = workout && workout.exercises ? workout.exercises.length : 0;
+    const completionRate = expectedExercises > 0 ? (exerciseCount / expectedExercises) * 100 : 0;
+    
+    container.innerHTML = `
+        <div class="stat-item">
+            <div class="stat-value">${waterCount}/8</div>
+            <div class="stat-name">Verres d'eau</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: ${Math.min((waterCount / 8) * 100, 100)}%"></div>
+            </div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">${exerciseCount}/${expectedExercises}</div>
+            <div class="stat-name">Exercices</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: ${completionRate}%"></div>
+            </div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">${Math.round(completionRate)}%</div>
+            <div class="stat-name">Taux complétion</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: ${completionRate}%"></div>
+            </div>
+        </div>
+    `;
+    
+    // Afficher les exercices détaillés
+    const workoutDataForDate = workoutData[date];
+    if (workoutDataForDate && workoutDataForDate.exercises) {
+        let exercisesHTML = '<div class="chart-title">Exercices complétés</div>';
+        workoutDataForDate.exercises.forEach(exercise => {
+            if (!exercise.skipped) {
+                exercisesHTML += `
+                    <div class="exercise-stat">
+                        <span class="exercise-name">${exercise.name}</span>
+                        <span class="exercise-value">✅</span>
+                    </div>
+                `;
+            }
+        });
+        exerciseContainer.innerHTML = exercisesHTML;
+    } else {
+        exerciseContainer.innerHTML = '<div class="no-data">Aucun exercice complété ce jour</div>';
+    }
+}
+
+function getWaterForDate(date) {
+    // Récupérer les données d'eau depuis le stockage existant
+    const saved = localStorage.getItem('fitnessData');
+    if (saved) {
+        const data = JSON.parse(saved);
+        return (data.water && data.water[date]) || 0;
+    }
+    return 0;
+}
+
+function getExercisesForDate(date) {
+    // Récupérer le nombre d'exercices depuis le stockage existant
+    if (workoutData[date] && workoutData[date].exercises) {
+        return workoutData[date].exercises.filter(ex => !ex.skipped).length;
+    }
+    return 0;
+}
+
+// Initialisation au chargement ORIGINALE
 window.onload = init;
