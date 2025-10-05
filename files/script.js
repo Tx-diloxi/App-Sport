@@ -1,5 +1,3 @@
-
-
 // Programme d'entraînement complet
 const workoutProgram = {
     'Lundi': {
