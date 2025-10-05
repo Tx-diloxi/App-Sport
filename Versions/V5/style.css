@@ -186,12 +186,6 @@ body {
     justify-content: space-between;
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    cursor: grab;
-    user-select: none;
-}
-
-.exercise-card:active {
-    cursor: grabbing;
 }
 
 .exercise-card.swiped-left {
@@ -309,58 +303,6 @@ body {
 .btn-done {
     background: var(--success);
     color: white;
-}
-
-/* Feedback visuel pendant le swipe */
-.swipe-feedback {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 24px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 10px;
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-    z-index: 10;
-    backdrop-filter: blur(10px);
-}
-
-.swipe-feedback.left {
-    left: 20px;
-    background: rgba(229, 62, 62, 0.8);
-    color: white;
-}
-
-.swipe-feedback.right {
-    right: 20px;
-    background: rgba(56, 161, 105, 0.8);
-    color: white;
-}
-
-/* Style pour le chrono de repos (swipe désactivé) */
-.rest-timer {
-    text-align: center;
-    padding: 30px;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 20px;
-    margin: 20px 0;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    cursor: default; /* Indique que le swipe n'est pas disponible */
-}
-
-.rest-timer .exercise-card {
-    cursor: default !important;
-}
-
-/* Style pour indiquer que le swipe est désactivé */
-.swipe-disabled {
-    cursor: default !important;
-}
-
-.swipe-disabled .swipe-indicator {
-    opacity: 0.3;
 }
 
 /* Hydratation */

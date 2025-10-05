@@ -1,3 +1,4 @@
+// Le code JavaScript reste exactement le même que précédemment
 // Programme d'entraînement complet
 const workoutProgram = {
     'Lundi': {
@@ -74,21 +75,6 @@ let waterCount = 0;
 let restTimer = null;
 let restTimeLeft = 0;
 
-// Variables pour le swipe
-let startX = 0;
-let currentX = 0;
-let isSwiping = false;
-let swipeEnabled = true;
-
-// Contrôle du swipe
-function enableSwipe() {
-    swipeEnabled = true;
-}
-
-function disableSwipe() {
-    swipeEnabled = false;
-}
-
 // Initialisation
 function init() {
     loadData();
@@ -97,7 +83,6 @@ function init() {
     loadMeals();
     updateStats();
     updateHistory();
-    setupSwipeHandlers();
     
     // Sélection automatique du jour actuel
     autoSelectDay();
@@ -157,14 +142,12 @@ function autoSelectDay() {
     
     selectDay(todayName);
     
-    // Masquer le sélecteur de jour après sélection automatique
-    document.getElementById('daySelector').style.display = 'none';
-    
-    // Mettre à jour le titre pour afficher le jour sélectionné
-    const titleElement = document.querySelector('#sport .card h3');
-    if (titleElement) {
-        titleElement.textContent = `Séance du ${todayName}`;
-    }
+    // Marquer le jour actuel
+    document.querySelectorAll('.day-btn').forEach(btn => {
+        if (btn.textContent === todayName) {
+            btn.classList.add('auto-day');
+        }
+    });
 }
 
 function selectDay(day) {
@@ -177,159 +160,6 @@ function selectDay(day) {
     });
 
     displayExercise();
-}
-
-// Fonctions de gestion du swipe
-function setupSwipeHandlers() {
-    const container = document.getElementById('swipeContainer');
-    
-    container.addEventListener('touchstart', handleTouchStart, { passive: false });
-    container.addEventListener('touchmove', handleTouchMove, { passive: false });
-    container.addEventListener('touchend', handleTouchEnd);
-    
-    container.addEventListener('mousedown', handleMouseDown);
-    container.addEventListener('mousemove', handleMouseMove);
-    container.addEventListener('mouseup', handleMouseUp);
-    container.addEventListener('mouseleave', handleMouseUp);
-}
-
-function handleTouchStart(e) {
-    if (!swipeEnabled || e.touches.length !== 1) return;
-    
-    startX = e.touches[0].clientX;
-    currentX = startX;
-    isSwiping = true;
-    e.preventDefault();
-}
-
-function handleTouchMove(e) {
-    if (!swipeEnabled || !isSwiping) return;
-    
-    if (e.touches.length === 1) {
-        currentX = e.touches[0].clientX;
-        updateCardPosition();
-        e.preventDefault();
-    }
-}
-
-function handleTouchEnd() {
-    if (!swipeEnabled || !isSwiping) return;
-    
-    handleSwipeEnd();
-    isSwiping = false;
-}
-
-function handleMouseDown(e) {
-    if (!swipeEnabled) return;
-    
-    startX = e.clientX;
-    currentX = startX;
-    isSwiping = true;
-    e.preventDefault();
-}
-
-function handleMouseMove(e) {
-    if (!swipeEnabled || !isSwiping) return;
-    
-    currentX = e.clientX;
-    updateCardPosition();
-    e.preventDefault();
-}
-
-function handleMouseUp() {
-    if (!swipeEnabled || !isSwiping) return;
-    
-    handleSwipeEnd();
-    isSwiping = false;
-}
-
-function updateCardPosition() {
-    const card = document.querySelector('.exercise-card');
-    if (!card) return;
-    
-    const deltaX = currentX - startX;
-    const rotation = deltaX * 0.1;
-    
-    card.style.transform = `translateX(${deltaX}px) rotate(${rotation}deg)`;
-    card.style.transition = 'none';
-    
-    // Feedback visuel
-    const leftFeedback = card.querySelector('.swipe-feedback.left');
-    const rightFeedback = card.querySelector('.swipe-feedback.right');
-    
-    if (deltaX > 50) {
-        card.style.backgroundColor = 'rgba(56, 161, 105, 0.3)';
-        if (rightFeedback) rightFeedback.style.opacity = Math.min(deltaX / 100, 1);
-        if (leftFeedback) leftFeedback.style.opacity = '0';
-    } else if (deltaX < -50) {
-        card.style.backgroundColor = 'rgba(229, 62, 62, 0.3)';
-        if (leftFeedback) leftFeedback.style.opacity = Math.min(-deltaX / 100, 1);
-        if (rightFeedback) rightFeedback.style.opacity = '0';
-    } else {
-        card.style.backgroundColor = '';
-        if (leftFeedback) leftFeedback.style.opacity = '0';
-        if (rightFeedback) rightFeedback.style.opacity = '0';
-    }
-}
-
-function handleSwipeEnd() {
-    const card = document.querySelector('.exercise-card');
-    if (!card) return;
-    
-    const deltaX = currentX - startX;
-    const swipeThreshold = 100;
-    
-    card.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
-    
-    if (deltaX > swipeThreshold) {
-        completeCurrentAction();
-    } else if (deltaX < -swipeThreshold) {
-        skipCurrentAction();
-    } else {
-        card.style.transform = 'translateX(0) rotate(0deg)';
-        card.style.backgroundColor = '';
-        
-        const leftFeedback = card.querySelector('.swipe-feedback.left');
-        const rightFeedback = card.querySelector('.swipe-feedback.right');
-        if (leftFeedback) leftFeedback.style.opacity = '0';
-        if (rightFeedback) rightFeedback.style.opacity = '0';
-    }
-}
-
-function completeCurrentAction() {
-    const card = document.querySelector('.exercise-card');
-    if (!card) return;
-    
-    card.style.transform = 'translateX(150%) rotate(20deg)';
-    card.style.opacity = '0';
-    
-    setTimeout(() => {
-        const workout = workoutProgram[currentDay];
-        if (workout.type === 'cardio') {
-            completeCardio();
-        } else if (workout.type === 'badminton') {
-            completeBadminton();
-        } else if (workout.type === 'muscu') {
-            completeSeries();
-        }
-    }, 300);
-}
-
-function skipCurrentAction() {
-    const card = document.querySelector('.exercise-card');
-    if (!card) return;
-    
-    card.style.transform = 'translateX(-150%) rotate(-20deg)';
-    card.style.opacity = '0';
-    
-    setTimeout(() => {
-        const workout = workoutProgram[currentDay];
-        if (workout.type === 'cardio' || workout.type === 'badminton') {
-            skipExercise();
-        } else if (workout.type === 'muscu') {
-            skipSeries();
-        }
-    }, 300);
 }
 
 // Affichage des exercices
@@ -352,6 +182,7 @@ function displayExercise() {
 
     const exercise = exercises[currentExerciseIndex];
     
+    // Affichage différent selon le type d'exercice
     if (workout.type === 'cardio') {
         displayCardioExercise(exercise, container);
     } else if (workout.type === 'badminton') {
@@ -365,14 +196,9 @@ function displayExercise() {
 
 // Affichage d'un exercice de cardio
 function displayCardioExercise(exercise, container) {
-    enableSwipe();
-    
     const card = document.createElement('div');
     card.className = 'exercise-card';
     card.innerHTML = `
-        <div class="swipe-feedback left">Passer</div>
-        <div class="swipe-feedback right">Terminer</div>
-        
         <div class="exercise-image">${exercise.icon}</div>
         <div class="exercise-name">${exercise.name}</div>
         <div class="exercise-details">
@@ -400,14 +226,9 @@ function displayCardioExercise(exercise, container) {
 
 // Affichage d'un exercice de badminton
 function displayBadmintonExercise(exercise, container) {
-    enableSwipe();
-    
     const card = document.createElement('div');
     card.className = 'exercise-card';
     card.innerHTML = `
-        <div class="swipe-feedback left">Non</div>
-        <div class="swipe-feedback right">Oui</div>
-        
         <div class="badminton-card">
             <div class="exercise-image">${exercise.icon}</div>
             <div class="exercise-name">${exercise.name}</div>
@@ -430,8 +251,6 @@ function displayMuscuExercise(exercise, container) {
     
     // Si on est en phase de repos
     if (restTimeLeft > 0) {
-        disableSwipe();
-        
         card.innerHTML = `
             <div class="rest-timer">
                 <div class="timer-label">⏱️ Temps de repos</div>
@@ -440,22 +259,18 @@ function displayMuscuExercise(exercise, container) {
                 <button class="skip-rest-btn" onclick="skipRest()">Passer le repos</button>
             </div>
         `;
-
+        
         container.innerHTML = '';
         container.appendChild(card);
         startRestTimer();
         return;
     }
     
-    enableSwipe();
-    
+    // Affichage normal de l'exercice
     const totalSets = exercise.sets;
     const currentSet = currentSeriesIndex + 1;
     
     card.innerHTML = `
-        <div class="swipe-feedback left">Passer</div>
-        <div class="swipe-feedback right">Terminer</div>
-        
         <div class="exercise-image">${exercise.icon}</div>
         <div class="exercise-name">${exercise.name}</div>
         <div class="exercise-details">
@@ -501,8 +316,7 @@ function completeCardio() {
     });
 
     saveData();
-    currentExerciseIndex++;
-    displayExercise();
+    animateSwipe('right');
 }
 
 // Complétion d'un exercice de badminton
@@ -518,8 +332,7 @@ function completeBadminton() {
     });
 
     saveData();
-    currentExerciseIndex++;
-    displayExercise();
+    animateSwipe('right');
 }
 
 function skipBadminton() {
@@ -533,8 +346,7 @@ function skipBadminton() {
     });
 
     saveData();
-    currentExerciseIndex++;
-    displayExercise();
+    animateSwipe('left');
 }
 
 // Complétion d'une série de musculation
@@ -546,6 +358,7 @@ function completeSeries() {
     const today = new Date().toISOString().split('T')[0];
     if (!workoutData[today]) workoutData[today] = { day: currentDay, exercises: [] };
     
+    // Chercher si l'exercice existe déjà dans les données
     let exerciseData = workoutData[today].exercises.find(e => e.name === exercise.name);
     
     if (!exerciseData) {
@@ -556,6 +369,7 @@ function completeSeries() {
         workoutData[today].exercises.push(exerciseData);
     }
     
+    // Ajouter la série
     exerciseData.series.push({
         set: currentSeriesIndex + 1,
         weight: weight || 0,
@@ -564,13 +378,15 @@ function completeSeries() {
 
     saveData();
     
+    // Passer à la série suivante ou à l'exercice suivant
     currentSeriesIndex++;
     
     if (currentSeriesIndex >= exercise.sets) {
+        // Dernière série terminée, passer à l'exercice suivant
         currentSeriesIndex = 0;
-        currentExerciseIndex++;
-        displayExercise();
+        animateSwipe('right');
     } else {
+        // Série suivante, démarrer le chrono de repos
         startRestPeriod(exercise.rest);
     }
 }
@@ -580,6 +396,7 @@ function skipSeries() {
     const today = new Date().toISOString().split('T')[0];
     if (!workoutData[today]) workoutData[today] = { day: currentDay, exercises: [] };
     
+    // Chercher si l'exercice existe déjà dans les données
     let exerciseData = workoutData[today].exercises.find(e => e.name === exercise.name);
     
     if (!exerciseData) {
@@ -590,6 +407,7 @@ function skipSeries() {
         workoutData[today].exercises.push(exerciseData);
     }
     
+    // Ajouter la série comme skip
     exerciseData.series.push({
         set: currentSeriesIndex + 1,
         skipped: true
@@ -597,25 +415,28 @@ function skipSeries() {
 
     saveData();
     
+    // Passer à la série suivante ou à l'exercice suivant
     currentSeriesIndex++;
     
     if (currentSeriesIndex >= exercise.sets) {
+        // Dernière série terminée, passer à l'exercice suivant
         currentSeriesIndex = 0;
-        currentExerciseIndex++;
-        displayExercise();
+        animateSwipe('left');
     } else {
+        // Série suivante, démarrer le chrono de repos
         startRestPeriod(exercise.rest);
     }
 }
 
 // Gestion du chrono de repos
 function startRestPeriod(restTime) {
+    // Convertir le temps de repos en secondes
     if (restTime.includes('min')) {
         restTimeLeft = parseInt(restTime) * 60;
     } else if (restTime.includes('sec')) {
         restTimeLeft = parseInt(restTime);
     } else {
-        restTimeLeft = 60;
+        restTimeLeft = 60; // 1 minute par défaut
     }
     
     displayExercise();
@@ -631,7 +452,6 @@ function startRestTimer() {
         if (restTimeLeft <= 0) {
             clearInterval(restTimer);
             restTimer = null;
-            enableSwipe();
             displayExercise();
         }
     }, 1000);
@@ -641,7 +461,6 @@ function skipRest() {
     if (restTimer) clearInterval(restTimer);
     restTimer = null;
     restTimeLeft = 0;
-    enableSwipe();
     displayExercise();
 }
 
@@ -651,9 +470,22 @@ function formatTime(seconds) {
     return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
 }
 
+// Animation de swipe
+function animateSwipe(direction) {
+    const card = document.querySelector('.exercise-card');
+    if (!card) return;
+    
+    card.classList.add('swiping');
+    card.classList.add(direction === 'right' ? 'swiped-right' : 'swiped-left');
+    
+    setTimeout(() => {
+        currentExerciseIndex++;
+        displayExercise();
+    }, 300);
+}
+
 function skipExercise() {
-    currentExerciseIndex++;
-    displayExercise();
+    animateSwipe('left');
 }
 
 function resetWorkout() {
