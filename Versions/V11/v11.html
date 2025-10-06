@@ -952,7 +952,6 @@
                 <div class="logo">A</div>
                 <div class="logo-text">Athlética</div>
             </div>
-            <p>Prise de Masse 2026 • Programme Professionnel</p>
         </div>
 
         <div class="content">
@@ -1373,11 +1372,11 @@
             const rightFeedback = card.querySelector('.swipe-feedback.right');
             
             if (deltaX > 50) {
-                card.style.backgroundColor = 'rgba(56, 161, 105, 0.3)';
+                card.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
                 if (rightFeedback) rightFeedback.style.opacity = Math.min(deltaX / 100, 1);
                 if (leftFeedback) leftFeedback.style.opacity = '0';
             } else if (deltaX < -50) {
-                card.style.backgroundColor = 'rgba(229, 62, 62, 0.3)';
+                card.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
                 if (leftFeedback) leftFeedback.style.opacity = Math.min(-deltaX / 100, 1);
                 if (rightFeedback) rightFeedback.style.opacity = '0';
             } else {
